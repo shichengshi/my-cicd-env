@@ -1,8 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ns.yaml
   - quick-start-postgres.yaml
   - argo-wf-ingress.yaml
   - events-install.yaml
   - events-install-validating-webhook.yaml
-  - eventbus-native.yaml
