@@ -4,3 +4,4 @@ resources:
   - eventbus-native.yaml
   - event-source.yaml
   - events-sensors.yaml
+  - event-sources-github.yaml
