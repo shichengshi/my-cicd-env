@@ -24,22 +24,27 @@ spec:
               metadata:
                 generateName: webhook-
               spec:
-                entrypoint: whalesay
-                arguments:
-                  parameters:
-                  - name: message
-                    # the value will get overridden by event payload from test-dep
-                    value: hello world
+                entrypoint: build
+                volumes:
+                - name: regcred
+                  secret:
+                    secretName: regcred
+                    items:
+                      - key: dockerconfig.json
+                        path: config.json
                 templates:
-                - name: whalesay
-                  inputs:
-                    parameters:
-                    - name: message
-                  container:
-                    image: docker/whalesay:latest
-                    command: [cowsay]
-                    args: ["{{inputs.parameters.message}}"]
-          parameters:
-            - src:
-                dependencyName: test-dep
-              dest: spec.arguments.parameters.0.value
+                  dag:
+                    tasks:
+                    - name: build
+                      templateRef:
+                        name: container-image
+                        template: build-kaniko-git
+                        clusterScope: true
+                      arguments:
+                        parameters:
+                        - name: app_repo
+                          value: git://github.com/nekia/airtng-node.git
+                        - name: container_image
+                          value: nekia/my-airtng-node
+                        - name: container_tag
+                          value: "1.0.0"

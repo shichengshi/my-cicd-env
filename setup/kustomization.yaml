@@ -4,3 +4,4 @@ resources:
   - eventbus-native.yaml
   - event-sources-github.yaml
   - event-sensors-github.yaml
+  - argo-workflows-templates-build-kaniko-git.yaml
