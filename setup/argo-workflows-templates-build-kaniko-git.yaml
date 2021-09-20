@@ -3,7 +3,7 @@ kind: ClusterWorkflowTemplate
 metadata:
   name: container-image
 spec:
-  serviceAccountName: operate-workflow-sa
+  serviceAccountName: workflow
   templates:
   - name: build-kaniko-git
     inputs:
