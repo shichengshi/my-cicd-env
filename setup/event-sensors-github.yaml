@@ -26,7 +26,7 @@ spec:
               namespace: argo-events
             spec:
               entrypoint: build
-              serviceAccountName: operate-workflow-sa
+              serviceAccountName: workflow
               volumes:
               - name: regcred
                 secret:
