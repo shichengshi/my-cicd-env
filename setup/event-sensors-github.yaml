@@ -46,8 +46,8 @@ spec:
                     arguments:
                       parameters:
                       - name: app_repo
-                        value: git://github.com/nekia/airtng-node.git
+                        value: git://github.com/yokoyama610/airtng-node.git
                       - name: container_image
-                        value: nekia/my-airtng-node
+                        value: yokoyama610/my-airtng-node
                       - name: container_tag
                         value: "1.0.0"
