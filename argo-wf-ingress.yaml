@@ -7,10 +7,11 @@ metadata:
     #ingress.kubernetes.io/rewrite-target: /$2
     #ingress.kubernetes.io/protocol: https # Traefik
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: cicd.15.152.54.80.nip.io
+    - host: cicd.13.208.247.35.nip.io
       http:
         paths:
           - backend:
@@ -33,7 +34,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: webhook.15.152.54.80.nip.io
+    - host: webhook.13.208.247.35.nip.io
       http:
         paths:
           - backend:
