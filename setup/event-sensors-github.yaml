@@ -27,6 +27,14 @@ spec:
             spec:
               entrypoint: build
               serviceAccountName: workflow
+              arguments:
+                parameters:
+                - name: app_repo
+                  value: git://github.com/
+                - name: container_image
+                  value: /my-airtng-node
+                - name: container_tag
+                  value: "1.0.0"
               volumes:
               - name: regcred
                 secret:
@@ -39,15 +47,23 @@ spec:
                 dag:
                   tasks:
                   - name: build
+                    inputs:
+                      parameters:
+                      - name: app_repo
+                      - name: container_image
+                      - name: container_tag
                     templateRef:
                       name: container-image
                       template: build-kaniko-git
                       clusterScope: true
-                    arguments:
-                      parameters:
-                      - name: app_repo
-                        value: git://github.com/nekia/airtng-node.git
-                      - name: container_image
-                        value: nekia/my-airtng-node
-                      - name: container_tag
-                        value: "1.0.0"
+        parameters:
+        - src:
+            dependencyName: test-dep
+            dataKey: body.repository.full_name
+          dest: spec.arguments.parameters.0.value
+          operation: append
+        - src:
+            dependencyName: test-dep
+            dataKey: body.sender.login
+          dest: spec.arguments.parameters.1.value
+          operation: prepend
