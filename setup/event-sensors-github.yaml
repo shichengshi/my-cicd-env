@@ -47,15 +47,18 @@ spec:
                 dag:
                   tasks:
                   - name: build
-                    inputs:
-                      parameters:
-                      - name: app_repo
-                      - name: container_image
-                      - name: container_tag
                     templateRef:
                       name: container-image
                       template: build-kaniko-git
                       clusterScope: true
+                    arguments:
+                      parameters:
+                      - name: app_repo
+                        value: "{{workflow.parameters.app_repo}}"
+                      - name: container_image
+                        value: "{{workflow.parameters.container_image}}"
+                      - name: container_tag
+                        value: "{{workflow.parameters.container_tag}}"
         parameters:
         - src:
             dependencyName: test-dep
