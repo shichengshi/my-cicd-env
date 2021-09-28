@@ -27,6 +27,14 @@ spec:
             spec:
               entrypoint: build
               serviceAccountName: workflow
+              arguments:
+                parameters:
+                - name: app_repo
+                  value: git://github.com/
+                - name: container_image
+                  value: /my-airtng-node
+                - name: container_tag
+                  value: "1.0.0"
               volumes:
               - name: regcred
                 secret:
@@ -46,8 +54,19 @@ spec:
                     arguments:
                       parameters:
                       - name: app_repo
-                        value: git://github.com/yokoyama610/airtng-node.git
+                        value: "{{workflow.parameters.app_repo}}"
                       - name: container_image
-                        value: yokoyama610/my-airtng-node
+                        value: "{{workflow.parameters.container_image}}"
                       - name: container_tag
-                        value: "1.0.0"
+                        value: "{{workflow.parameters.container_tag}}"
+        parameters:
+        - src:
+            dependencyName: test-dep
+            dataKey: body.repository.full_name
+          dest: spec.arguments.parameters.0.value
+          operation: append
+        - src:
+            dependencyName: test-dep
+            dataKey: body.sender.login
+          dest: spec.arguments.parameters.1.value
+          operation: prepend
