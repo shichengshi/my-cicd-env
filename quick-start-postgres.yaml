@@ -875,7 +875,7 @@ spec:
         - server
         - --auth-mode
         - client
-        image: quay.io/argoproj/argocli:latest
+        image: quay.io/argoproj/argocli:v3.1.12
         name: argo-server
         env:
         - name: BASE_HREF
@@ -1010,7 +1010,7 @@ spec:
         - --configmap
         - workflow-controller-configmap
         - --executor-image
-        - quay.io/argoproj/argoexec:latest
+        - quay.io/argoproj/argoexec:v3.1.12
         - --namespaced
         command:
         - workflow-controller
@@ -1020,7 +1020,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.name
-        image: quay.io/argoproj/workflow-controller:latest
+        image: quay.io/argoproj/workflow-controller:v3.1.12
         livenessProbe:
           failureThreshold: 3
           httpGet:
