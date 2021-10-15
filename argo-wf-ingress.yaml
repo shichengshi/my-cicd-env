@@ -11,7 +11,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: cicd.3.143.1.62.nip.io
+    - host: cicd.3.144.106.205.nip.io
       http:
         paths:
           - backend:
@@ -34,7 +34,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: webhook.3.143.1.62.nip.io
+    - host: webhook.3.144.106.205.nip.io
       http:
         paths:
           - backend:
