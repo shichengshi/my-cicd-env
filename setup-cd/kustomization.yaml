@@ -4,6 +4,3 @@ resources:
 - ns.yaml
 - install.yaml
 - argocd-wf-ingress.yaml
-images:
-- name: shichengshi/my-airtng-node
-  newTag: 1.0.0
