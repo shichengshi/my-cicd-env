@@ -34,7 +34,7 @@ spec:
                 - name: container_image
                   value: /my-airtng-node
                 - name: container_tag
-                  value: "1.0.0"
+                  value: "latest"
               volumes:
               - name: regcred
                 secret:
