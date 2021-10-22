@@ -9,7 +9,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
   rules:
-    - host: argocd.3.137.163.232.nip.io
+    - host: argocd.3.142.35.89.nip.io
       http:
         paths:
           - backend:
