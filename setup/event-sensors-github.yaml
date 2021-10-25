@@ -34,10 +34,7 @@ spec:
                 - name: container_image
                   value: /my-airtng-node
                 - name: container_tag
-#                  value: "latest"
-                  value: payload.release.tag_name
-#        　         valueFrom:
-#                     event: payload.release.tag_name
+                  value: "latest"
               volumes:
               - name: regcred
                 secret:
@@ -72,4 +69,9 @@ spec:
             dependencyName: test-dep
             dataKey: body.sender.login
           dest: spec.arguments.parameters.1.value
+          operation: prepend
+        - src:
+            dependencyName: test-dep
+            dataKey: body.release.tag_name
+          dest: spec.arguments.parameters.2.value
           operation: prepend
