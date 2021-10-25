@@ -36,7 +36,7 @@ spec:
                 - name: container_tag
 #                  value: "latest"
                   value: payload.release.tag_name
-        　         valueFrom:
+#        　         valueFrom:
 #                     event: payload.release.tag_name
               volumes:
               - name: regcred
