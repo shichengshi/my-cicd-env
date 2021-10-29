@@ -48,8 +48,6 @@ spec:
                   tasks:
                   - name: event-type
                     template: event-type
-                    valueFrom:
-                        expression: "metadata['x-github-event'] == ['push'] ? tasks.push: tasks.release"
                   - name: push
                     depends: event-type
                     template: push
@@ -58,6 +56,11 @@ spec:
                     depends: event-type
                     template: release
                     when: "metadata['x-github-event'] == ['release']"
+                outputs:
+                  parameters:
+                    - name: stepresult
+                      valueFrom:
+                        expression:  "metadata['x-github-event'] == ['push'] ? tasks.push: tasks.release"
 
               - name: push
                 templateRef:
