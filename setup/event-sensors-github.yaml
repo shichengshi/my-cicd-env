@@ -46,19 +46,48 @@ spec:
               - name: build
                 dag:
                   tasks:
-                  - name: build
-                    templateRef:
-                      name: container-image
-                      template: build-kaniko-git
-                      clusterScope: true
-                    arguments:
-                      parameters:
-                      - name: app_repo
-                        value: "{{workflow.parameters.app_repo}}"
-                      - name: container_image
-                        value: "{{workflow.parameters.container_image}}"
-                      - name: container_tag
-                        value: "{{workflow.parameters.container_tag}}"
+                  - name: event-type
+                    template: event-type
+                  - name: push
+                    template: push
+                    when: "metadata['x-github-event'] == ['push']"
+                  - name: release
+                    template: release
+                    when: "metadata['x-github-event'] == ['release']"
+                outputs:
+                  parameters:
+                    - name: stepresult
+                      valueFrom:
+                        expression: "metadata['x-github-event'] == ['push'] ? tasks.push.outputs.result : tasks.release.outputs.result"
+#                        expression: "tasks['flip-coin'].outputs.result == 'heads' ? tasks.heads.outputs.result : tasks.tails.outputs.result"
+                  
+                - name: push
+                  templateRef:
+                    name: container-image
+                    template: build-kaniko-git
+                    clusterScope: true
+                  arguments:
+                    parameters:
+                    - name: app_repo
+                      value: "{{workflow.parameters.app_repo}}"
+                    - name: container_image
+                      value: "{{workflow.parameters.container_image}}"
+                    - name: container_tag
+                      value: "{{workflow.parameters.container_tag}}"
+                      
+                - name: release
+                  templateRef:
+                    name: container-image
+                    template: build-kaniko-git
+                    clusterScope: true
+                  arguments:
+                    parameters:
+                    - name: app_repo
+                      value: "{{workflow.parameters.app_repo}}"
+                    - name: container_image
+                      value: "{{workflow.parameters.container_image}}"
+                    - name: container_tag
+                      value: "{{workflow.parameters.container_tag}}"
         parameters:
         - src:
             dependencyName: test-dep
@@ -70,8 +99,4 @@ spec:
             dataKey: body.sender.login
           dest: spec.arguments.parameters.1.value
           operation: prepend
-        - src:
-            dependencyName: test-dep
-            dataKey: body.release.tag_name
-          dest: spec.arguments.parameters.2.value
-          operation: overwrite
+
